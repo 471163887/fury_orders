@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="300">
+    <Properties>
+        <property name="service_name">mecury</property>
+        <property name="location_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %t %p %c{1.}:%L - %m%n
+        </property>
+        <property name="no_location_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %t %p %c{1.} - %m%n
+        </property>
+        <property name="log_home">/opt/log/fury/web/${service_name}</property>
+    </Properties>
+    <Appenders>
+        <!-- INFO begin -->
+        <RollingRandomAccessFile name="INFO" fileName="${log_home}/info.log"
+                                 filePattern="${log_home}/$${date:yyyy-MM}/info.log.%d{yyyy-MM-dd-HH}.log.gz">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout pattern="${no_location_pattern}"/>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+        <!-- INFO end -->
+
+        <!-- WARN begin -->
+        <RollingRandomAccessFile name="WARN" fileName="${log_home}/warn.log"
+                                 filePattern="${log_home}/$${date:yyyy-MM}/warn.log.%d{yyyy-MM-dd-HH}.log.gz">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout pattern="${location_pattern}"/>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+        <!-- WARN end -->
+
+        <!-- ERROR begin -->
+        <RollingRandomAccessFile name="ERROR" fileName="${log_home}/error.log"
+                                 filePattern="${log_home}/$${date:yyyy-MM}/error.log.%d{yyyy-MM-dd-HH}.log.gz">
+            <Filters>
+                <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+
+            <PatternLayout pattern="${location_pattern}"/>
+
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingRandomAccessFile>
+        <!-- ERROR end -->
+    </Appenders>
+
+    <Loggers>
+        <asyncRoot level="INFO" includeLocation="true">
+            <AppenderRef ref="INFO"/>
+            <AppenderRef ref="WARN"/>
+            <AppenderRef ref="ERROR"/>
+        </asyncRoot>
+    </Loggers>
+</Configuration>

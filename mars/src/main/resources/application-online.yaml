@@ -1,0 +1,46 @@
+druid:
+  loginUsername: zzInfrastructure
+  loginPassword: a9af47d8209ccfaf8463b32686e74427
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://zmonitor.db.zhuaninc.com:3058/db58_zmonitor?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: zmonitor_wr
+    password: 3996ccdd0b1a59b8
+    initialSize: 1
+    maxActive: 20
+    minIdle: 1
+    # 获取连接等待超时的时间
+    maxWait: 60000
+    # 超过时间限制是否回收
+    removeAbandoned: true
+    # 超过时间限制多长
+    removeAbandonedTimeout: 180
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 600000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    # 用来检测连接是否有效的sql，要求是一个查询语句
+    validationQuery: SELECT 1 FROM DUAL
+    # 申请连接的时候检测
+    testWhileIdle: true
+    #申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能
+    testOnBorrow: false
+    #归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能
+    testOnReturn: false
+    #打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 50
+    #属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
+    #监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall
+    filters: stat
+
+jodis:
+  zkProxyDir: /jodis/zzwxmsgcluster
+  appKey: e6263baa9a0edfbfe0218bdb80758e22
+  password: zzwxmsgclustersertes
+
+influx.domain.url: http://influxdb1.zhuaninc.com:80
+
+zzmq.consumerGroup: zzmonitorAlarmsEventConsumer
+zzmq.namesrvAddr: rocketmq1.58dns.org:9876;rocketmq2.58dns.org:9876;rocketmq3.58dns.org:9876
+zzmq.topic: zzmonitor_alarms_event

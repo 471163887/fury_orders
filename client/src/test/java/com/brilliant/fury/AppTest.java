@@ -1,20 +1,16 @@
 package com.brilliant.fury;
 
-import static org.junit.Assert.assertTrue;
-
+import com.brilliant.fury.core.util.TimeUtil;
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+
+public class AppTest {
+
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    public void shouldAnswerWithTrue() {
+        System.out.println(TimeUtil.getNowString());
     }
+
+
+
 }
