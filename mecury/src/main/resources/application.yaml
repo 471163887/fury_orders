@@ -1,0 +1,20 @@
+#【可选】【本地配置】部署平台会根据机器环境强制配置成prod、test
+spring:
+  profiles:
+    active: dev
+
+#【可选】【本地配置】服务部署前需要在发布系统注册，部署平台会根据注册的端口号强制覆盖
+server:
+  port: 9102
+
+#【必须】
+logging:
+  config: classpath:log4j2.xml
+  level:
+    org:
+      apache:
+        zookeeper: info
+
+mybatis:
+  typeAliasesPackage: com.brilliant.fury.mecury.model.po
+  mapperLocations: classpath:mappers/**.xml
