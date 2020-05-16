@@ -2,13 +2,13 @@ druid:
   loginUsername: zzInfrastructure
   loginPassword: a9af47d8209ccfaf8463b32686e74427
   datasource:
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://test19685.db.58dns.org:23666/zmonitor?zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf-8&useSSL=false
-    username: zz_test
-    password: 7c3962d66f492290
-    initialSize: 1
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/orders?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: ${datasource_username}
+    password: ${datasource_password}
+    initialSize: 5
     maxActive: 20
-    minIdle: 1
+    minIdle: 3
     # 获取连接等待超时的时间
     maxWait: 60000
     # 超过时间限制是否回收
@@ -33,11 +33,3 @@ druid:
     #属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
     #监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall
     filters: stat
-
-
-#influx.domain.url: http://test-influxdb1.zhuaninc.com:80
-influx.domain.url: http://influxdb1.zhuaninc.com:80
-
-zzmq.consumerGroup: FulingtongTestComsumerGroupName
-zzmq.namesrvAddr: testzzmq1.zhuaninc.com:9876;testzzmq2.zhuaninc.com:9876
-zzmq.topic: FulingtongTestTopic
