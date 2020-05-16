@@ -31,6 +31,19 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!--asyncRoot需要依赖此包，否则报错：Unable to invoke factory method in class class org.apache.logging.log4j.core.async.AsyncLoggerConfig$RootLogger for element asyncRoot-->
+        <!--参考：https://stackoverflow.com/questions/41849323/log4j2-async-logger-is-not-starting-->
+        <dependency>
+            <groupId>com.lmax</groupId>
+            <artifactId>disruptor</artifactId>
+            <version>${com.lmax.disruptor.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
 

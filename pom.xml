@@ -26,6 +26,7 @@
     <properties>
         <java.version>1.8</java.version>
         <fury.core.version>1.0.0-SNAPSHOT</fury.core.version>
+        <com.lmax.disruptor.version>3.4.2</com.lmax.disruptor.version>
     </properties>
 
 

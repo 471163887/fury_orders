@@ -1,4 +1,4 @@
-package com.brilliant.fury.mecury.service;
+package com.brilliant.fury.mecury.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.brilliant.fury.core.base.JsonResp;
 import com.brilliant.fury.core.util.GuavaUtil;
 import com.brilliant.fury.mecury.model.po.BizAuth;
-import com.brilliant.fury.mecury.service.BizAuthServiceImpl;
+import com.brilliant.fury.mecury.service.impl.BizAuthServiceImpl;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
 
-    private static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
+    private static ThreadLocal<BizAuth> threadLocal = new ThreadLocal<>();
 
     @Resource
     private BizAuthServiceImpl bizAuthService;
@@ -50,7 +50,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         BizAuth bizId = bizAuthService.getByToken(token);
 
-        if (null == bizId || bizId == 0) {
+        if (null == bizId) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "token未通过授权");
             response.addHeader("content-type", "application/json; charset=utf-8");
             response.getOutputStream().write(TOKEN_UNAUTHORIZED);
@@ -66,7 +66,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         threadLocal.remove();
     }
 
-    public static Long getBizId() {
+    public static BizAuth getBizAuth() {
         return threadLocal.get();
     }
 }

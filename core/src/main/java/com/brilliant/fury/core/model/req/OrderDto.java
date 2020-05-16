@@ -1,9 +1,18 @@
 package com.brilliant.fury.core.model.req;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * @author by fury.
  * version 2020/5/15.
  */
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class OrderDto {
 
     /**

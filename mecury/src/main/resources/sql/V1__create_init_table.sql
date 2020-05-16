@@ -1,16 +1,16 @@
 # 授权表
 CREATE TABLE `biz_auth` (
-  `id`         BIGINT(20)  NOT NULL AUTO_INCREMENT PRIMARY KEY
+  `id`              INT(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT '自增id',
-  `token`      VARCHAR(32) NOT NULL
+  `token`           VARCHAR(32)      NOT NULL
   COMMENT '授权码',
-  `workflow_engine`     TINYINT(3)  NOT NULL DEFAULT 0
+  `workflow_engine` TINYINT(3)       NOT NULL DEFAULT 0
   COMMENT '流程引擎抽象, 因为订单可能有不同的流程. 0:默认',
-  `expire_min` INT(11)     NOT NULL DEFAULT 0
+  `expire_min`      INT(11)          NOT NULL DEFAULT 0
   COMMENT '过期时间, 默认不过期',
-  `create_at`  TIMESTAMP   NOT NULL DEFAULT '2020-01-01 00:00:00'
+  `create_at`       TIMESTAMP        NOT NULL DEFAULT '2020-01-01 00:00:00'
   COMMENT '创建时间',
-  `update_at`  TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `update_at`       TIMESTAMP        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   COMMENT '更新时间',
   INDEX `idx_token`(token)
 )
@@ -52,43 +52,43 @@ CREATE TABLE `order_info` (
 # 订单详情表
 CREATE TABLE `order_detail` (
   # 订单属性
-  `id`               BIGINT(20)             NOT NULL AUTO_INCREMENT PRIMARY KEY
+  `id`               BIGINT(20)         NOT NULL AUTO_INCREMENT PRIMARY KEY
   COMMENT '自增id',
-  `biz_id`           SMALLINT(6)   UNSIGNED NOT NULL
+  `biz_id`           INT(11)   UNSIGNED NOT NULL
   COMMENT '创建订单的系统id',
-  `order_no`         VARCHAR(64)            NOT NULL
+  `order_no`         VARCHAR(64)        NOT NULL
   COMMENT '订单号',
-  `buyer_id`         VARCHAR(64)            NOT NULL DEFAULT ''
+  `buyer_id`         VARCHAR(64)        NOT NULL DEFAULT ''
   COMMENT '买家id',
-  `remark`           VARCHAR(256)           NOT NULL DEFAULT ''
+  `remark`           VARCHAR(256)       NOT NULL DEFAULT ''
   COMMENT '买家备注',
-  `ext_json`         VARCHAR(1024)          NOT NULL DEFAULT ''
+  `ext_json`         VARCHAR(1024)      NOT NULL DEFAULT ''
   COMMENT '扩展字段',
-  `addr_id`          BIGINT(20)             NOT NULL DEFAULT 0
+  `addr_id`          BIGINT(20)         NOT NULL DEFAULT 0
   COMMENT '买家地址id',
-  `need_invoice`     BOOLEAN                NOT NULL DEFAULT FALSE
+  `need_invoice`     BOOLEAN            NOT NULL DEFAULT FALSE
   COMMENT '需要发票',
-  `is_oversea`       BOOLEAN                NOT NULL DEFAULT FALSE
+  `is_oversea`       BOOLEAN            NOT NULL DEFAULT FALSE
   COMMENT '是海外订单',
-  `is_virtual`       BOOLEAN                NOT NULL DEFAULT FALSE
+  `is_virtual`       BOOLEAN            NOT NULL DEFAULT FALSE
   COMMENT '是虚拟商品',
   # 物流相关
-  `is_cod`           BOOLEAN                NOT NULL DEFAULT FALSE
+  `is_cod`           BOOLEAN            NOT NULL DEFAULT FALSE
   COMMENT '是货到付款',
   # 订单金额相关
-  `total`            DECIMAL(19, 4)         NOT NULL
+  `total`            DECIMAL(19, 4)     NOT NULL
   COMMENT '订单总金额, 不能为空',
-  `favourable_total` DECIMAL(19, 4)         NOT NULL DEFAULT 0.00
+  `favourable_total` DECIMAL(19, 4)     NOT NULL DEFAULT 0.00
   COMMENT '优惠总金额',
-  `logistics_pay`    DECIMAL(19, 4)         NOT NULL DEFAULT 0.00
+  `logistics_pay`    DECIMAL(19, 4)     NOT NULL DEFAULT 0.00
   COMMENT '运费(物流费用)',
-  `goods_total`      DECIMAL(19, 4)         NOT NULL DEFAULT 0.00
+  `goods_total`      DECIMAL(19, 4)     NOT NULL DEFAULT 0.00
   COMMENT '货款原价合计',
-  `tax_total`        DECIMAL(19, 4)         NOT NULL DEFAULT 0.00
+  `tax_total`        DECIMAL(19, 4)     NOT NULL DEFAULT 0.00
   COMMENT '税费合计',
-  `create_at`        TIMESTAMP              NOT NULL DEFAULT '2020-01-01 00:00:00'
+  `create_at`        TIMESTAMP          NOT NULL DEFAULT '2020-01-01 00:00:00'
   COMMENT '创建时间',
-  `update_at`        TIMESTAMP              NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `update_at`        TIMESTAMP          NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   COMMENT '更新时间',
   UNIQUE KEY `idx_order_no`(order_no),
   INDEX `idx_buyer_id`(buyer_id)
