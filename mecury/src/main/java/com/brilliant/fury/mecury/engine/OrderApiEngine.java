@@ -3,6 +3,9 @@ package com.brilliant.fury.mecury.engine;
 import com.brilliant.fury.mecury.model.enums.EngineType;
 import com.brilliant.fury.mecury.service.OrderApiService;
 import com.brilliant.fury.mecury.service.impl.GoToGoogleEngineImpl;
+import com.google.common.collect.Maps;
+import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Component;
 
@@ -16,14 +19,16 @@ public class OrderApiEngine {
     @Resource
     private GoToGoogleEngineImpl goToGoogleEngine;
 
-    public OrderApiService getApiByEngine(int engine) {
+    private Map<EngineType, OrderApiService> orderApiMap = Maps.newHashMap();
+
+    @PostConstruct
+    private void init() {
+        orderApiMap.put(EngineType.GOTOGOOGLE, goToGoogleEngine);
+    }
+
+    public OrderApiService getApiByEngine(Integer engine) {
         EngineType engineType = EngineType.codeOf(engine);
-        switch (engineType) {
-            case GOTOGOOGLE:
-                return goToGoogleEngine;
-            default:
-                return null;
-        }
+        return orderApiMap.getOrDefault(engineType, null);
     }
 
 }

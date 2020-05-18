@@ -1,7 +1,7 @@
 package com.brilliant.fury.mecury.service;
 
 import com.brilliant.fury.core.model.req.OrderDto;
-import com.brilliant.fury.mecury.model.po.BizAuth;
+import com.brilliant.fury.core.model.po.BizAuth;
 
 /**
  * @author by fury.
@@ -9,16 +9,24 @@ import com.brilliant.fury.mecury.model.po.BizAuth;
  */
 public interface OrderApiService {
 
-  /**
-   * 创建订单
-   * @return 订单号
-   */
-  String newOrder(OrderDto orderDto, BizAuth bizAuth);
+    /**
+     * 创建订单
+     *
+     * @return 订单号
+     */
+    String newOrder(OrderDto orderDto, BizAuth bizAuth);
 
-  /**
-   * 查询订单
-   * @return 订单Json对象
-   */
-  Object queryOrder(String orderNo);
+    /**
+     * 查询订单
+     *
+     * @return 订单Json对象
+     */
+    Object queryOrder(String orderNo);
 
+    /**
+     * 更新订单
+     */
+    String updateOrder(OrderDto orderRequest, BizAuth bizAuth);
+
+    String delOrder(String orderNo);
 }

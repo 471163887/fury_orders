@@ -1,5 +1,8 @@
 package com.brilliant.fury.core.model.req;
 
+import com.brilliant.fury.core.model.po.BuyerAddr;
+import com.brilliant.fury.core.model.po.OrderDetail;
+import com.brilliant.fury.core.model.po.OrderInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,5 +27,10 @@ public class OrderDto {
      * 买家地址，可以为空。
      */
     public BuyerAddr buyerAddr;
+
+    /**
+     * 订单详情状态信息。
+     */
+    public OrderInfo orderInfo;
 
 }

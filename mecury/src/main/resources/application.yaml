@@ -16,5 +16,5 @@ logging:
         zookeeper: info
 
 mybatis:
-  typeAliasesPackage: com.brilliant.fury.mecury.model.po
+  typeAliasesPackage: com.brilliant.fury.core.model.po
   mapperLocations: classpath:mappers/**.xml

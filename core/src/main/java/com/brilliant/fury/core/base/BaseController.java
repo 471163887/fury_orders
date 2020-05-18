@@ -53,7 +53,7 @@ public abstract class BaseController {
     protected Object exceptionHandler(Exception ex) {
         String simpleName = ex.getClass().getSimpleName();
         String errMsg = ex.getMessage();
-        log.warn("exceptionHandler name:{} msg:{}", simpleName, errMsg, ex);
+        log.error("[BaseController_exceptionHandler_name]:{} msg:{}", simpleName, errMsg, ex);
         switch (simpleName) {
             case "IllegalArgumentException":
                 return errorJson(PARAM_WRONG.getCode(),

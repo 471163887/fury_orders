@@ -1,16 +1,17 @@
-package com.brilliant.fury.mecury.controller;
+package com.brilliant.fury.mecury.controller.api;
 
 import com.brilliant.fury.core.base.BaseController;
 import com.brilliant.fury.core.model.req.OrderDto;
 import com.brilliant.fury.mecury.config.AuthInterceptor;
 import com.brilliant.fury.mecury.engine.OrderApiEngine;
-import com.brilliant.fury.mecury.model.po.BizAuth;
+import com.brilliant.fury.core.model.po.BizAuth;
 import com.brilliant.fury.mecury.service.OrderApiService;
 import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,8 +54,57 @@ public class OrderApi extends BaseController {
      * @return 订单 JSON 对象.
      */
     @GetMapping(value = "/query")
-    public Object queryOrder(@RequestParam("orderNo") String orderNo) throws Exception {
-        return dataJson(orderNo);
+    public Object queryOrder(@RequestParam("order_no") String orderNo) throws Exception {
+
+        log.info("[FURY_MECURY_BizApi_queryOrder_orderNo]={}", orderNo);
+        BizAuth bizAuth = AuthInterceptor.getBizAuth();
+        OrderApiService orderApiService = orderApiEngine.getApiByEngine(bizAuth.getWorkflowEngine());
+
+        Object order = orderApiService.queryOrder(orderNo);
+        log.info("[FURY_MECURY_BizApi_queryOrder_resp]={}", order);
+        return dataJson(order);
+    }
+
+    /**
+     * 修改订单.
+     */
+    @PostMapping(value = "/update")
+    public Object updateOrder(@RequestBody OrderDto orderRequest) throws Exception {
+        BigDecimal total = orderRequest.orderDetail.getTotal();
+        Preconditions.checkArgument(null != total && total.compareTo(BigDecimal.ZERO) > 0,
+            "订单总金额不能为空，并且应大于0");
+        log.info("[FURY_MECURY_BizApi_updateOrder_orderDto]={}", orderRequest);
+        BizAuth bizAuth = AuthInterceptor.getBizAuth();
+        OrderApiService orderApiService = orderApiEngine.getApiByEngine(bizAuth.getWorkflowEngine());
+        try {
+            String updateRet = orderApiService.updateOrder(orderRequest, bizAuth);
+            log.info("[FURY_MECURY_BizApi_updateOrder_updateRet]={}", updateRet);
+            return dataJson(updateRet);
+        } catch (Throwable t) {
+            String message = t.getMessage();
+            log.error("[MECURY_updateOrder_error]={}", message, t);
+            return errorJson(message);
+        }
+    }
+
+    /**
+     * 删除订单.
+     */
+    @PostMapping(value = "/del")
+    public Object delOrder(@RequestParam("order_no") String orderNo) throws Exception {
+        log.info("[FURY_MECURY_BizApi_delOrder_orderNo]={}", orderNo);
+        BizAuth bizAuth = AuthInterceptor.getBizAuth();
+        OrderApiService orderApiService = orderApiEngine.getApiByEngine(bizAuth.getWorkflowEngine());
+        try {
+            String delRet = orderApiService.delOrder(orderNo);
+            log.info("[FURY_MECURY_BizApi_delOrder_resp]={}", delRet);
+            return dataJson(delRet);
+        } catch (Throwable t) {
+            String message = t.getMessage();
+            log.error("[MECURY_delOrder_error]={}", message, t);
+            return errorJson(message);
+        }
+
     }
 
     /**

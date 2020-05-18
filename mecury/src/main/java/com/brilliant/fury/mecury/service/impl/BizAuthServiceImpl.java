@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.brilliant.fury.mecury.mapper.BizAuthMapper;
-import com.brilliant.fury.mecury.model.po.BizAuth;
+import com.brilliant.fury.core.model.po.BizAuth;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

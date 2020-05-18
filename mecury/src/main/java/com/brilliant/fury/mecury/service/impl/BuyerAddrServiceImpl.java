@@ -3,7 +3,7 @@ package com.brilliant.fury.mecury.service.impl;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.brilliant.fury.mecury.mapper.BuyerAddrMapper;
-import com.brilliant.fury.mecury.model.po.BuyerAddr;
+import com.brilliant.fury.core.model.po.BuyerAddr;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

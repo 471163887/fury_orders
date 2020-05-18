@@ -3,7 +3,7 @@ package com.brilliant.fury.mecury.config;
 import com.alibaba.fastjson.JSONObject;
 import com.brilliant.fury.core.base.JsonResp;
 import com.brilliant.fury.core.util.GuavaUtil;
-import com.brilliant.fury.mecury.model.po.BizAuth;
+import com.brilliant.fury.core.model.po.BizAuth;
 import com.brilliant.fury.mecury.service.impl.BizAuthServiceImpl;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;

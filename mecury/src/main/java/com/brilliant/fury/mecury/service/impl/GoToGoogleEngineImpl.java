@@ -1,15 +1,16 @@
 package com.brilliant.fury.mecury.service.impl;
 
-import com.brilliant.fury.core.model.req.BuyerAddr;
-import com.brilliant.fury.core.model.req.OrderDetail;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.brilliant.fury.core.model.po.BizAuth;
+import com.brilliant.fury.core.model.po.BuyerAddr;
+import com.brilliant.fury.core.model.po.OrderDetail;
+import com.brilliant.fury.core.model.po.OrderInfo;
 import com.brilliant.fury.core.model.req.OrderDto;
 import com.brilliant.fury.core.util.TimeUtil;
-import com.brilliant.fury.mecury.model.po.BizAuth;
 import com.brilliant.fury.mecury.service.OrderApiService;
 import java.util.Date;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,29 +46,57 @@ public class GoToGoogleEngineImpl implements OrderApiService {
 
     @Transactional(rollbackFor = Exception.class)
     public void saveOrder(OrderDto orderDto) {
-
-        OrderDetail orderDetail = orderDto.getOrderDetail();
+        OrderDetail orderDetail = orderDto.orderDetail;
         String orderNo = orderDetail.getOrderNo();
         // 订单初始状态
         orderInfoService.createByOrderNo(orderNo);
         // 订单详情
-        com.brilliant.fury.mecury.model.po.OrderDetail detail = new com.brilliant.fury
-            .mecury.model.po.OrderDetail();
-        BeanUtils.copyProperties(orderDetail, detail);
-        orderDetailService.save(detail);
+        orderDetailService.save(orderDetail);
         // 买家信息
-        BuyerAddr buyerAddr = orderDto.getBuyerAddr();
-        if (null != buyerAddr) {
-            com.brilliant.fury.mecury.model.po.BuyerAddr buyerAddrPo = new com.brilliant.fury
-                .mecury.model.po.BuyerAddr();
-            BeanUtils.copyProperties(buyerAddr, buyerAddrPo);
-            buyerAddrService.save(buyerAddrPo);
+        if (null != orderDto.buyerAddr) {
+            buyerAddrService.save(orderDto.buyerAddr);
         }
     }
 
     @Override
     public Object queryOrder(String orderNo) {
-        return null;
+        QueryWrapper<OrderDetail> detailWrapper = new QueryWrapper<>();
+        detailWrapper.eq("order_no", orderNo);
+        OrderDetail orderDetail = orderDetailService.getOne(detailWrapper);
+
+        QueryWrapper<OrderInfo> infoWrapper = new QueryWrapper<>();
+        infoWrapper.eq("order_no", orderNo);
+        OrderInfo orderInfo = orderInfoService.getOne(infoWrapper);
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.orderDetail = orderDetail;
+        orderDto.orderInfo = orderInfo;
+        return orderDto;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String updateOrder(OrderDto orderDto, BizAuth bizAuth) {
+        if (null != orderDto.orderInfo) {
+            orderInfoService.updateById(orderDto.orderInfo);
+        }
+        // 订单详情
+        if (null != orderDto.orderDetail) {
+            orderDetailService.updateById(orderDto.orderDetail);
+        }
+        // 买家信息
+        if (null != orderDto.buyerAddr) {
+            buyerAddrService.updateById(orderDto.buyerAddr);
+        }
+        return "ok";
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String delOrder(String orderNo) {
+        orderInfoService.delByOrderNo(orderNo);
+        orderDetailService.delByOrderNo(orderNo);
+        return "ok";
     }
 
     private void paddingOrderNo(OrderDto orderDto, String orderNo, BizAuth bizAuth) {
@@ -78,9 +107,8 @@ public class GoToGoogleEngineImpl implements OrderApiService {
         orderDetail.setCreateAt(nowDate);
         orderDetail.setBizId(bizAuth.getId());
 
-        BuyerAddr buyerAddr = orderDto.getBuyerAddr();
-        if (null != buyerAddr) {
-            buyerAddr.setCreateAt(nowDate);
+        if (null != orderDto.buyerAddr) {
+            orderDto.buyerAddr.setCreateAt(nowDate);
         }
     }
 }
