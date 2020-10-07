@@ -1,6 +1,8 @@
 package com.brilliant.fury.mecury.controller.api;
 
 import com.brilliant.fury.core.base.BaseController;
+import com.brilliant.fury.core.exception.DuplicatePayException;
+import com.brilliant.fury.core.exception.OrderNoExistException;
 import com.brilliant.fury.core.model.req.OrderDto;
 import com.brilliant.fury.mecury.config.AuthInterceptor;
 import com.brilliant.fury.mecury.engine.OrderApiEngine;
@@ -10,11 +12,13 @@ import com.google.common.base.Preconditions;
 import java.math.BigDecimal;
 import javax.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -112,23 +116,25 @@ public class OrderApi extends BaseController {
      *
      * @return 支付链接.
      */
-    /*@RequestMapping(value = "/payurl", method = RequestMethod.GET)
+    @RequestMapping(value = "/payurl", method = RequestMethod.GET)
     public Object genOrderPayUrl(@RequestParam("orderNo") String orderNo) throws HttpException {
-        LOG.info("welcome to genOrderPayUrl interface. orderNo:%s", orderNo);
+        log.info("[FURY_MECURY_genOrderPayUrl_req]orderNo={}", orderNo);
+        BizAuth bizAuth = AuthInterceptor.getBizAuth();
+        OrderApiService orderApiService = orderApiEngine.getApiByEngine(bizAuth.getWorkflowEngine());
         try {
             String payUrl = orderApiService.genPayUrl(orderNo);
-            LOG.info("gen payUrl:%s", payUrl);
+            log.info("[FURY_MECURY_genOrderPayUrl_resp]payUrl={}", payUrl);
             return dataJson(payUrl);
-        } catch (NoExistException e) {
-            LOG.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
+        } catch (OrderNoExistException e) {
+            log.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
             return errorJson(e.getMessage());
         } catch (InterruptedException e) {
-            LOG.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
+            log.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
             return errorJson("生成支付id错误, 请稍后重试");
         } catch (DuplicatePayException e) {
-            LOG.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
+            log.warn("genOrderPayUrl err msg:%s", e.getMessage(), e);
             return errorJson("订单重复支付.");
         }
-    }*/
+    }
 
 }

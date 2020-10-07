@@ -1,10 +1,5 @@
 package com.brilliant.fury.mecury.config;
 
-/**
- * @author by fury.
- * version 2020/5/15.
- */
-
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;

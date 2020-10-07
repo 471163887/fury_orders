@@ -1,7 +1,10 @@
 package com.brilliant.fury.mecury.service;
 
+import com.brilliant.fury.core.exception.DuplicatePayException;
+import com.brilliant.fury.core.exception.OrderNoExistException;
 import com.brilliant.fury.core.model.req.OrderDto;
 import com.brilliant.fury.core.model.po.BizAuth;
+import org.apache.http.HttpException;
 
 /**
  * @author by fury.
@@ -28,5 +31,14 @@ public interface OrderApiService {
      */
     String updateOrder(OrderDto orderRequest, BizAuth bizAuth);
 
+    /**
+     * 删除订单
+     */
     String delOrder(String orderNo);
+
+    /**
+     * 生成支付链接
+     */
+    String genPayUrl(String orderNo) throws OrderNoExistException, InterruptedException,
+        HttpException, DuplicatePayException;
 }
