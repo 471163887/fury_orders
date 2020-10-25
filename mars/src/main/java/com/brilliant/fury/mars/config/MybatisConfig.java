@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @AutoConfigureAfter({DataConfig.class})
-@PropertySource(value = "classpath:application.properties")
+@PropertySource(value = "classpath:application.yaml")
 public class MybatisConfig {
 
     @Value("${mybatis.typeAliasesPackage}")
