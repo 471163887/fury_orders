@@ -1,5 +1,9 @@
-package com.brilliant.fury.core.model.req;
+package com.brilliant.fury.core.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -15,8 +19,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("order_detail")
 public class OrderDetail {
 
+    @TableId(type= IdType.AUTO)
     private Long id;
 
     private Integer bizId;
@@ -39,9 +45,6 @@ public class OrderDetail {
 
     private Boolean isCod;
 
-    /**
-     * 不能为空。
-     */
     private BigDecimal total;
 
     private BigDecimal favourableTotal;
@@ -52,8 +55,9 @@ public class OrderDetail {
 
     private BigDecimal taxTotal;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createAt;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date updateAt;
-
 }

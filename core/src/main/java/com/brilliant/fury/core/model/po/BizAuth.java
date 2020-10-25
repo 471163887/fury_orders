@@ -1,6 +1,8 @@
-package com.brilliant.fury.mecury.model.po;
+package com.brilliant.fury.core.model.po;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +13,15 @@ import lombok.NoArgsConstructor;
  * @author by fury.
  * version 2017/11/6.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("biz_auth")
 public class BizAuth {
 
-    private Long id;
+    @TableId(type = IdType.AUTO)
+    private Integer id;
 
     private String token;
 

@@ -1,7 +1,9 @@
-package com.brilliant.fury.mecury.model.po;
+package com.brilliant.fury.core.model.po;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import java.math.BigDecimal;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -10,14 +12,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author by fury. version 2017/11/6.
+ * @author by fury.
+ * version 2017/11/6.
  */
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("pay_detail")
 public class PayDetail {
+
+    @TableId(type= IdType.AUTO)
     private Long id;
 
     private String orderNo;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO" monitorInterval="300">
     <Properties>
-        <property name="service_name">mecury</property>
+        <property name="service_name">cerberus</property>
         <property name="location_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %t %p %c{1.}:%L - %m%n
         </property>
         <property name="no_location_pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %t %p %c{1.} - %m%n
@@ -89,5 +89,4 @@
             <AppenderRef ref="ERROR"/>
         </asyncRoot>
     </Loggers>
-
 </Configuration>

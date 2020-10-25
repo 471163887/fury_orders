@@ -33,3 +33,23 @@ druid:
     #属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
     #监控统计用的filter:stat 日志用的filter:log4j 防御SQL注入的filter:wall
     filters: stat
+
+# order pool
+order:
+  pool:
+    min:
+      size: 10
+    new:
+      count: 10
+    work:
+      id: 1
+    datacenter:
+      id: 1
+fury:
+  monitor:
+    service:
+      key: aa
+      host: localhost
+      port: 9998
+    env:
+      tag: dev1
