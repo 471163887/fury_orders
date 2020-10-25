@@ -31,7 +31,7 @@ public class MonitorApi extends BaseController {
     private void tagTest(String metricName) {
 
         FuryMonitor.sum(metricName, 1);
-        F.uryMonitor.max(metricName + "_max", 2);
+        FuryMonitor.max(metricName + "_max", 2);
         FuryMonitor.min(metricName + "_min", 3.1);
         FuryMonitor.min(metricName + "_min", 3.2);
         FuryMonitor.avg(metricName + "_avg", 5);
